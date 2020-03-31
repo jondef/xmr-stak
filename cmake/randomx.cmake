@@ -7,7 +7,14 @@ list(APPEND HEADERS_CRYPTO
 #    ${PROJECT_SOURCE_DIR}/xmrstak/backend/cpu/crypto/rx/RxDataset.h
 #    ${PROJECT_SOURCE_DIR}/xmrstak/backend/cpu/crypto/rx/RxVm.h
 )
-
+function(print_all_variables)
+    get_cmake_property(_variableNames VARIABLES)
+    list(SORT _variableNames)
+    foreach (_variableName ${_variableNames})
+        message(STATUS "${_variableName}=${${_variableName}}")
+    endforeach ()
+endfunction()
+print_all_variables()
 list(APPEND SOURCES_RANDOMX
     ${PROJECT_SOURCE_DIR}/xmrstak/backend/cpu/crypto/randomx/aes_hash.cpp
     ${PROJECT_SOURCE_DIR}/xmrstak/backend/cpu/crypto/randomx/allocator.cpp
