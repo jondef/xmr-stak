@@ -155,11 +155,18 @@ void xmrstak::VirtualMemory::init(bool hugePages)
 
 void xmrstak::VirtualMemory::protectExecutableMemory(void *p, size_t size)
 {
-    mprotect(p, size, PROT_READ | PROT_EXEC);
+#if defined(_WIN32) || defined(WIN32)
+	_mprotect(p, size, PROT_READ | PROT_EXEC);
+#else
+	mprotect(p, size, PROT_READ | PROT_EXEC);
+#endif
 }
 
 
-void xmrstak::VirtualMemory::unprotectExecutableMemory(void *p, size_t size)
-{
-    mprotect(p, size, PROT_WRITE | PROT_EXEC);
+void xmrstak::VirtualMemory::unprotectExecutableMemory(void *p, size_t size) {
+#if defined(_WIN32) || defined(WIN32)
+	_mprotect(p, size, PROT_WRITE | PROT_EXEC);
+#else
+	mprotect(p, size, PROT_WRITE | PROT_EXEC);
+#endif
 }
